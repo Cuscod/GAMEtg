@@ -1,0 +1,375 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
+                 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                 sans-serif;
+    background: linear-gradient(135deg, #f5f5f5 0%, #efefef 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.welcome-screen.hidden {
+    display: none;
+}
+
+.logo {
+    font-size: 80px;
+    animation: bounce 2s infinite;
+}
+
+.welcome-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+.welcome-subtitle {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.btn {
+    padding: 16px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-difficulty {
+    background: linear-gradient(135deg, #6B5DEE 0%, #5B4ECF 100%);
+    color: white;
+    flex: 1;
+}
+
+.btn-difficulty:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-difficulty:hover {
+    box-shadow: 0 6px 16px rgba(107, 93, 238, 0.3);
+}
+
+/* Game Screen */
+.game-screen {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.game-screen.active {
+    display: flex;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.game-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 16px;
+    color: #6B5DEE;
+}
+
+.btn-back {
+    background: white;
+    color: #6B5DEE;
+    border: 2px solid #6B5DEE;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back:active {
+    transform: scale(0.95);
+}
+
+.btn-back:hover {
+    background: #f5f5f5;
+}
+
+.game-board {
+    display: grid;
+    gap: 10px;
+}
+
+.game-board.grid-4x4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.game-board.grid-6x6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.card {
+    aspect-ratio: 1;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-style: preserve-3d;
+    position: relative;
+    user-select: none;
+}
+
+.card:active {
+    transform: scale(0.95);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.matched {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.card::before {
+    content: '?';
+    position: absolute;
+    font-size: 40px;
+    color: #ccc;
+    font-weight: bold;
+}
+
+.card.flipped::before {
+    display: none;
+}
+
+.card:disabled,
+.card.matched {
+    pointer-events: none;
+}
+
+/* Completion Popup */
+.completion-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.completion-popup.active {
+    display: flex;
+}
+
+.popup-content {
+    background: white;
+    padding: 40px 24px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 300px;
+    animation: slideUp 0.4s ease;
+}
+
+.popup-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 0.6s ease-in-out;
+}
+
+.popup-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.popup-text {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.popup-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-popup {
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #6B5DEE 0%, #5B4ECF 100%);
+    color: white;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .game-board.grid-4x4 {
+        gap: 8px;
+    }
+
+    .game-board.grid-6x6 {
+        gap: 6px;
+    }
+
+    .card {
+        border-radius: 8px;
+        font-size: 32px;
+    }
+
+    .card::before {
+        font-size: 28px;
+    }
+
+    .welcome-title {
+        font-size: 28px;
+    }
+
+    .game-stats {
+        gap: 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .game-board.grid-6x6 {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+    }
+
+    .card {
+        font-size: 24px;
+    }
+
+    .card::before {
+        font-size: 20px;
+    }
+}
